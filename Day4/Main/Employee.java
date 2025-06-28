@@ -23,7 +23,7 @@ class Employee {
  class EmployeeRecordSystem {
     private static final String FILE_PATH = "employees.txt";
 
-    // **Create**
+    
     public void addEmployee(Employee emp) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(emp.toString());
@@ -33,7 +33,7 @@ class Employee {
         }
     }
 
-    // **Read**
+    
     public List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -50,7 +50,7 @@ class Employee {
         return employees;
     }
 
-    // **Update**
+    
     public void updateEmployee(int id, Employee updatedEmp) {
         List<Employee> employees = getAllEmployees();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
@@ -67,7 +67,7 @@ class Employee {
         }
     }
 
-    // **Delete**
+    
     public void deleteEmployee(int id) {
         List<Employee> employees = getAllEmployees();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
@@ -82,7 +82,7 @@ class Employee {
         }
     }
 
-    // **Main Method**
+    
     public static void main(String[] args) {
         EmployeeRecordSystem system = new EmployeeRecordSystem();
         
