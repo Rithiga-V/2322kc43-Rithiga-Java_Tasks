@@ -1,0 +1,324 @@
+mysql> create table studentprofile(
+    -> rollno int primary key,
+    -> name varchar(20) not null,
+    -> dob date,
+    -> department varchar(50) not null,
+    -> city varchar(20) not null);
+ERROR 1046 (3D000): No database selected
+mysql> use rithu;
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| rithu      |
++------------+
+1 row in set (0.00 sec)
+
+mysql> create table studentprofile(
+    -> rollno int primary key,
+    -> name varchar(20) not null,
+    -> dob date,
+    -> city varchar(20) not null);
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> create table studentprofile(
+    -> rollno int primary key,
+    -> name varchar(20) not null,
+    -> dob date,
+    -> department varchar(50) not null,
+    -> city varchar(20) not null);
+ERROR 1050 (42S01): Table 'studentprofile' already exists
+mysql> drop table studentprofile;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> create table studentprofile(
+    -> rollno int primary key,
+    -> name varchar(20) not null,
+    -> dob date,
+    -> department varchar(50) not null,
+    -> city varchar(20) not null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student profile;
+ERROR 1146 (42S02): Table 'rithu.student' doesn't exist
+mysql> select * from studentprofile;
+Empty set (0.02 sec)
+
+mysql> INSERT INTO studentprofile (rollno, name, dob, department, city) VALUES
+    -> (1, 'Alice Johnson', '2001-05-15', 'Computer Science', 'New York'),
+    -> (2, 'Bob Smith', '2000-08-22', 'Mechanical Engineering', 'Los Angeles'),
+    -> (3, 'Charlie Brown', '1999-12-30', 'Electrical Engineering', 'Chicago'),
+    -> (4, 'Diana Prince', '2002-03-10', 'Mathematics', 'Houston'),
+    -> (5, 'Ethan Hunt', '2001-07-25', 'Physics', 'Phoenix');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from studentprofile;
++--------+---------------+------------+------------------------+-------------+
+| rollno | name          | dob        | department             | city        |
++--------+---------------+------------+------------------------+-------------+
+|      1 | Alice Johnson | 2001-05-15 | Computer Science       | New York    |
+|      2 | Bob Smith     | 2000-08-22 | Mechanical Engineering | Los Angeles |
+|      3 | Charlie Brown | 1999-12-30 | Electrical Engineering | Chicago     |
+|      4 | Diana Prince  | 2002-03-10 | Mathematics            | Houston     |
+|      5 | Ethan Hunt    | 2001-07-25 | Physics                | Phoenix     |
++--------+---------------+------------+------------------------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> create table marks(
+    -> rollno int,
+    -> name varchar(20) not null,
+    -> mark1 int,
+    -> mark2 int,
+    -> foreign key (rollno) references studentprofile (rollno),
+    -> check(mark1<=100),
+    -> check(mark2<=100));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select * from marks;
+Empty set (0.01 sec)
+
+mysql> INSERT INTO marks (rollno, name, mark1, mark2) VALUES
+    -> (1, 'Alice Johnson', 85, 90),
+    -> (2, 'Bob Smith', 78, 82),
+    -> (3, 'Charlie Brown', 92, 88),
+    -> (4, 'Diana Prince', 95, 94),
+    -> (5, 'Ethan Hunt', 80, 85);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+
+| rollno | name          | mark1 | mark2 |
++--------+---------------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |
+|      2 | Bob Smith     |    78 |    82 |
+|      3 | Charlie Brown |    92 |    88 |
+|      4 | Diana Prince  |    95 |    94 |
+|      5 | Ethan Hunt    |    80 |    85 |
++--------+---------------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table marks 
+    -> add total int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+
+| rollno | name          | mark1 | mark2 | total |
++--------+---------------+-------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |  NULL |
+|      2 | Bob Smith     |    78 |    82 |  NULL |
+|      3 | Charlie Brown |    92 |    88 |  NULL |
+|      4 | Diana Prince  |    95 |    94 |  NULL |
+|      5 | Ethan Hunt    |    80 |    85 |  NULL |
++--------+---------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table studentprofile rename column dob to dateofbirth;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from studentprofile;
++--------+---------------+-------------+------------------------+-------------+
+| rollno | name          | dateofbirth | department             | city        |
++--------+---------------+-------------+------------------------+-------------+
+|      1 | Alice Johnson | 2001-05-15  | Computer Science       | New York    |
+|      2 | Bob Smith     | 2000-08-22  | Mechanical Engineering | Los Angeles |
+|      3 | Charlie Brown | 1999-12-30  | Electrical Engineering | Chicago     |
+|      4 | Diana Prince  | 2002-03-10  | Mathematics            | Houston     |
+|      5 | Ethan Hunt    | 2001-07-25  | Physics                | Phoenix     |
++--------+---------------+-------------+------------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from studentprofile;
++--------+---------------+-------------+------------------------+-------------+
+| rollno | name          | dateofbirth | department             | city        |
++--------+---------------+-------------+------------------------+-------------+
+|      1 | Alice Johnson | 2001-05-15  | Computer Science       | New York    |
+|      2 | Bob Smith     | 2000-08-22  | Mechanical Engineering | Los Angeles |
+|      3 | Charlie Brown | 1999-12-30  | Electrical Engineering | Chicago     |
+|      4 | Diana Prince  | 2002-03-10  | Mathematics            | Houston     |
+|      5 | Ethan Hunt    | 2001-07-25  | Physics                | Phoenix     |
++--------+---------------+-------------+------------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+
+| rollno | name          | mark1 | mark2 | total |
++--------+---------------+-------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |  NULL |
+|      2 | Bob Smith     |    78 |    82 |  NULL |
+|      3 | Charlie Brown |    92 |    88 |  NULL |
+|      4 | Diana Prince  |    95 |    94 |  NULL |
+|      5 | Ethan Hunt    |    80 |    85 |  NULL |
++--------+---------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_rithu |
++-----------------+
+| customers       |
+| dept            |
+| emp             |
+| marks           |
+| products        |
+| sales           |
+| studentprofile  |
++-----------------+
+7 rows in set (0.04 sec)
+
+mysql> update marks set total = mark1 + mark2;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+
+| rollno | name          | mark1 | mark2 | total |
++--------+---------------+-------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 |
+|      2 | Bob Smith     |    78 |    82 |   160 |
+|      3 | Charlie Brown |    92 |    88 |   180 |
+|      4 | Diana Prince  |    95 |    94 |   189 |
+|      5 | Ethan Hunt    |    80 |    85 |   165 |
++--------+---------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> set foreign_key_checks = 0;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delete from studentprofile rollno = 4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 4' at line 1
+mysql> delete from studentprofile name = 'Diana Prince';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'Diana Prince'' at line 1
+mysql> delete from studentprofile where name = 'Diana Prince';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from studentprofile;
++--------+---------------+-------------+------------------------+-------------+
+| rollno | name          | dateofbirth | department             | city        |
++--------+---------------+-------------+------------------------+-------------+
+|      1 | Alice Johnson | 2001-05-15  | Computer Science       | New York    |
+|      2 | Bob Smith     | 2000-08-22  | Mechanical Engineering | Los Angeles |
+|      3 | Charlie Brown | 1999-12-30  | Electrical Engineering | Chicago     |
+|      5 | Ethan Hunt    | 2001-07-25  | Physics                | Phoenix     |
++--------+---------------+-------------+------------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from studentprofile;
++--------+---------------+-------------+------------------------+-------------+
+| rollno | name          | dateofbirth | department             | city        |
++--------+---------------+-------------+------------------------+-------------+
+|      1 | Alice Johnson | 2001-05-15  | Computer Science       | New York    |
+|      2 | Bob Smith     | 2000-08-22  | Mechanical Engineering | Los Angeles |
+|      3 | Charlie Brown | 1999-12-30  | Electrical Engineering | Chicago     |
+|      5 | Ethan Hunt    | 2001-07-25  | Physics                | Phoenix     |
++--------+---------------+-------------+------------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+
+| rollno | name          | mark1 | mark2 | total |
++--------+---------------+-------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 |
+|      2 | Bob Smith     |    78 |    82 |   160 |
+|      3 | Charlie Brown |    92 |    88 |   180 |
+|      4 | Diana Prince  |    95 |    94 |   189 |
+|      5 | Ethan Hunt    |    80 |    85 |   165 |
++--------+---------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> commit
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> alter table marks
+    -> add column average int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table marks
+    -> add column grade varchar(10);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+---------+-------+
+| rollno | name          | mark1 | mark2 | total | average | grade |
++--------+---------------+-------+-------+-------+---------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 |    NULL | NULL  |
+|      2 | Bob Smith     |    78 |    82 |   160 |    NULL | NULL  |
+|      3 | Charlie Brown |    92 |    88 |   180 |    NULL | NULL  |
+|      4 | Diana Prince  |    95 |    94 |   189 |    NULL | NULL  |
+|      5 | Ethan Hunt    |    80 |    85 |   165 |    NULL | NULL  |
++--------+---------------+-------+-------+-------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update marks set average = total / 2;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+---------+-------+
+| rollno | name          | mark1 | mark2 | total | average | grade |
++--------+---------------+-------+-------+-------+---------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 |      88 | NULL  |
+|      2 | Bob Smith     |    78 |    82 |   160 |      80 | NULL  |
+|      3 | Charlie Brown |    92 |    88 |   180 |      90 | NULL  |
+|      4 | Diana Prince  |    95 |    94 |   189 |      95 | NULL  |
+|      5 | Ethan Hunt    |    80 |    85 |   165 |      83 | NULL  |
++--------+---------------+-------+-------+-------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update marks set grade = case when mark1 > 40 then 'Pass'
+    -> else 'Fail'
+    -> end;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+---------+-------+
+| rollno | name          | mark1 | mark2 | total | average | grade |
++--------+---------------+-------+-------+-------+---------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 |      88 | Pass  |
+|      2 | Bob Smith     |    78 |    82 |   160 |      80 | Pass  |
+|      3 | Charlie Brown |    92 |    88 |   180 |      90 | Pass  |
+|      4 | Diana Prince  |    95 |    94 |   189 |      95 | Pass  |
+|      5 | Ethan Hunt    |    80 |    85 |   165 |      83 | Pass  |
++--------+---------------+-------+-------+-------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table marks drop average;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++--------+---------------+-------+-------+-------+-------+
+| rollno | name          | mark1 | mark2 | total | grade |
++--------+---------------+-------+-------+-------+-------+
+|      1 | Alice Johnson |    85 |    90 |   175 | Pass  |
+|      2 | Bob Smith     |    78 |    82 |   160 | Pass  |
+|      3 | Charlie Brown |    92 |    88 |   180 | Pass  |
+|      4 | Diana Prince  |    95 |    94 |   189 | Pass  |
+|      5 | Ethan Hunt    |    80 |    85 |   165 | Pass  |
++--------+---------------+-------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> truncate;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> truncate table studentprofile;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> truncate table marks;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from studentprofile;
+Empty set (0.01 sec)
+
+mysql> select * from marks;
+Empty set (0.00 sec)
+
+mysql> notee
